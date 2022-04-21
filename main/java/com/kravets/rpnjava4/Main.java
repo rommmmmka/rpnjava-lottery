@@ -17,26 +17,33 @@ public class Main {
         try{
             Server server  = new Server(new ServerSocket(4004));
             while (true) {
-                server.receiveFromClient();
-                Ticket currentTicket = server.getTicket();
-                System.out.println("Ticket received:\n" + currentTicket);
-                int bestId = -1;
-                Set<Integer> bestCorrect = new HashSet<>();
-                for (int i = 0; i < 10; i++) {
-                    Set<Integer> currCorrect = new HashSet<>(tickets.get(i).getValues());
-                    currCorrect.retainAll(currentTicket.getValues());
-                    if (bestId == -1 || bestCorrect.size() < currCorrect.size()) {
-                        bestId = i + 1;
-                        bestCorrect = currCorrect;
+                try {
+                    server.receiveFromClient();
+                    Ticket currentTicket = server.getTicket();
+                    if (currentTicket == null) {
+                        server = new Server(new ServerSocket(4004));
+                        continue;
                     }
+                    System.out.println("Ticket received:\n" + currentTicket);
+                    int bestId = -1;
+                    Set<Integer> bestCorrect = new HashSet<>();
+                    for (int i = 0; i < 10; i++) {
+                        Set<Integer> currCorrect = new HashSet<>(tickets.get(i).getValues());
+                        currCorrect.retainAll(currentTicket.getValues());
+                        if (bestId == -1 || bestCorrect.size() < currCorrect.size()) {
+                            bestId = i + 1;
+                            bestCorrect = currCorrect;
+                        }
+                    }
+                    ReturnData returnData = new ReturnData(bestCorrect, bestId);
+                    System.out.println(returnData);
+                    server.replyToClient(returnData);
+                    System.out.println("");
                 }
-                ReturnData returnData = new ReturnData(bestCorrect, bestId);
-                System.out.println(returnData);
-                server.replyToClient(returnData);
-                System.out.println("");
+                catch (Exception e) {
+
+                }
             }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        } catch (Exception e){}
     }
 }

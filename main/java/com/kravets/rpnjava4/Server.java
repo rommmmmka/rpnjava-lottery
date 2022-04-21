@@ -20,9 +20,7 @@ public class Server {
 
             this.outp = new ObjectOutputStream(socket.getOutputStream());
             this.inp = new ObjectInputStream(socket.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
     }
 
     public void replyToClient(ReturnData returnData) {
@@ -31,7 +29,6 @@ public class Server {
                 outp.writeObject(returnData);
                 System.out.println("Answer sent");
             } catch (IOException e) {
-                e.printStackTrace();
                 closeConnection(serverSocket, socket, outp, inp);
             }
         }
@@ -42,7 +39,6 @@ public class Server {
             try {
                 this.ticket = (Ticket) inp.readObject();
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
                 closeConnection(serverSocket, socket, outp, inp);
             }
         }
@@ -54,12 +50,12 @@ public class Server {
             if (outp != null) outp.close();
             if (serverSocket != null) serverSocket.close();
             if (socket != null) socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) {}
     }
 
     public Ticket getTicket() {
-        return ticket;
+        Ticket returnTicket = ticket;
+        ticket = null;
+        return returnTicket;
     }
 }
