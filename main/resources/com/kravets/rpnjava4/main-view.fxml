@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="208.0" prefWidth="534.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kravets.rpnjava4.MainController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <HBox prefHeight="61.0" prefWidth="494.0">
+         <children>
+            <TextField fx:id="textField1" onTextChange="#onTextInput1" />
+            <TextField fx:id="textField2" onTextChange="#onTextInput2" />
+            <TextField fx:id="textField3" onTextChange="#onTextInput3" />
+            <TextField fx:id="textField4" onTextChange="#onTextInput4" />
+            <TextField fx:id="textField5" onTextChange="#onTextInput5" />
+            <TextField fx:id="textField6" onTextChange="#onTextInput6" />
+            <TextField fx:id="textField7" onTextChange="#onTextInput7" />
+            <TextField fx:id="textField8" onTextChange="#onTextInput8" />
+            <TextField fx:id="textField9" onTextChange="#onTextInput9" />
+            <TextField fx:id="textField10" onTextChange="#onTextInput10" />
+         </children>
+      </HBox>
+      <Button mnemonicParsing="false" onMouseClicked="#onButtonClick" text="Отправить" />
+   </children>
+</VBox>
