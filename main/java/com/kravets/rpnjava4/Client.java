@@ -9,7 +9,7 @@ public class Client {
     private ObjectInputStream inp;
     private ObjectOutputStream outp;
 
-    private ArrayList<Integer> correctIndexes;
+    private ArrayList<Integer> correctNumbers;
     private int bestId;
 
     public Client(Socket socket) {
@@ -36,7 +36,7 @@ public class Client {
     public void receiveFromServer() {
         try {
             ReturnData returnData = (ReturnData) inp.readObject();
-            this.correctIndexes = new ArrayList<>(returnData.getCorrectIndexes());
+            this.correctNumbers = new ArrayList<>(returnData.getCorrect());
             this.bestId = returnData.getBestId();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -54,8 +54,8 @@ public class Client {
         }
     }
 
-    public ArrayList<Integer> getCorrectIndexes() {
-        return correctIndexes;
+    public ArrayList<Integer> getCorrectNumbers() {
+        return correctNumbers;
     }
 
     public int getBestId() {

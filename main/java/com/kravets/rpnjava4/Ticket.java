@@ -1,28 +1,29 @@
 package com.kravets.rpnjava4;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Ticket implements Serializable {
-    private List<Integer> values;
+    private Set<Integer> values;
 
     public Ticket() {
-        this.values = new ArrayList<>();
-        for (int i = 0; i < 10; i++)
+        this.values = new HashSet<>();
+        while (this.values.size() < 10)
             this.values.add((int)(Math.random() * 100) + 1);
     }
 
-    public Ticket(List<Integer> a) {
-        this.values = new ArrayList<>(a);
+    public Ticket(Set<Integer> a) {
+        this.values = new HashSet<>(a);
     }
 
-    public List<Integer> getValues() {
+    public Set<Integer> getValues() {
         return values;
     }
 
     @Override
     public String toString() {
-        return values.toString();
+        List<Integer> list = new ArrayList<>(values);
+        Collections.sort(list);
+        return list.toString();
     }
 }

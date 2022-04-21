@@ -2,34 +2,27 @@ package com.kravets.rpnjava4;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public class ReturnData implements Serializable {
-    private List<Integer> correctIndexes;
+    private Set<Integer> correct;
     private int bestId;
 
-    public ReturnData(List<Integer> correctIndexes, int bestId) {
-        this.correctIndexes = correctIndexes;
+    public ReturnData(Set<Integer> correct, int bestId) {
+        this.correct = correct;
         this.bestId = bestId;
     }
 
-    public List<Integer> getCorrectIndexes() {
-        return correctIndexes;
-    }
-
-    public void setCorrectIndexes(List<Integer> correctIndexes) {
-        this.correctIndexes = correctIndexes;
+    public Set<Integer> getCorrect() {
+        return correct;
     }
 
     public int getBestId() {
         return bestId;
     }
 
-    public void setBestId(int bestId) {
-        this.bestId = bestId;
-    }
-
     @Override
     public String toString() {
-        return "Correct indexes: " + correctIndexes + "; id:" + bestId;
+        return "Correct numbers: " + correct + ", id: " + bestId;
     }
 }

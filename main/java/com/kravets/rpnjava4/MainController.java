@@ -9,9 +9,7 @@ import javafx.scene.control.TextField;
 
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class MainController implements Initializable {
     @FXML
@@ -92,23 +90,42 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    protected void onButtonClick() {
-        List<Integer> numbersList = new ArrayList<>();
-        numbersList.add(Integer.parseInt(textField1.getText()));
-        numbersList.add(Integer.parseInt(textField2.getText()));
-        numbersList.add(Integer.parseInt(textField3.getText()));
-        numbersList.add(Integer.parseInt(textField4.getText()));
-        numbersList.add(Integer.parseInt(textField5.getText()));
-        numbersList.add(Integer.parseInt(textField6.getText()));
-        numbersList.add(Integer.parseInt(textField7.getText()));
-        numbersList.add(Integer.parseInt(textField8.getText()));
-        numbersList.add(Integer.parseInt(textField9.getText()));
-        numbersList.add(Integer.parseInt(textField10.getText()));
+    protected void onAction() {
+        Set<Integer> numbersSet = new HashSet<>();
+        try {
+            numbersSet.add(Integer.parseInt(textField1.getText()));
+            numbersSet.add(Integer.parseInt(textField2.getText()));
+            numbersSet.add(Integer.parseInt(textField3.getText()));
+            numbersSet.add(Integer.parseInt(textField4.getText()));
+            numbersSet.add(Integer.parseInt(textField5.getText()));
+            numbersSet.add(Integer.parseInt(textField6.getText()));
+            numbersSet.add(Integer.parseInt(textField7.getText()));
+            numbersSet.add(Integer.parseInt(textField8.getText()));
+            numbersSet.add(Integer.parseInt(textField9.getText()));
+            numbersSet.add(Integer.parseInt(textField10.getText()));
+        }
+        catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Спортлото");
+            alert.setHeaderText("Все поля должны быть заполнены");
+            alert.setContentText("");
+            alert.showAndWait();
+            return;
+        }
 
-        Ticket ticket = new Ticket(numbersList);
+        if (numbersSet.size() != 10) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Спортлото");
+            alert.setHeaderText("Числа не должны повторяться");
+            alert.setContentText("");
+            alert.showAndWait();
+            return;
+        }
+
+        Ticket ticket = new Ticket(numbersSet);
         client.sendToServer(ticket);
         client.receiveFromServer();
-        ArrayList<Integer> correctIndexes = client.getCorrectIndexes();
+        ArrayList<Integer> correctIndexes = client.getCorrectNumbers();
         int bestId = client.getBestId();
         if (correctIndexes.size() == 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -120,7 +137,7 @@ public class MainController implements Initializable {
             StringBuilder content = new StringBuilder("Номера совпавших чисел:");
             for (int i: correctIndexes)
                 content.append(" ").append(i);
-            content.append("\nНаибольшее число совпадений с билетом №" + bestId);
+            content.append("\nНаибольшее число совпадений с билетом №").append(bestId);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Спортлото");
